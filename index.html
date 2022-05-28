@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+        <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+		<script src="components/touch-controls.js"></script>
+		
+		<script src="https://unpkg.com/aframe-teleport-controls@0.2.x/dist/aframe-teleport-controls.min.js"></script>
+		<script src="https://unpkg.com/aframe-controller-cursor-component@0.2.x/dist/aframe-controller-cursor-component.min.js"></script>
+		<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/random-color.js"></script>
+		<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/snap.js"></script>
+		<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/intersection-spawn.js"></script>
+		<script src="https://rawgit.com/chenzlabs/auto-detect-controllers/master/dist/aframe-auto-detect-controllers-component.min.js"></script> 
+
+		
+    </head>
+    <body>
+        <a-scene look-controls wasd-controls touch-controls>
+			
+			<a-assets>
+			 <a-mixin id="grabnjoin"
+			 	
+		         geometry="primitive: cylinder; radius: 1.0 ; height: 0.001"
+		         material="shader: standard"
+		         random-color
+		         snap="offset: 0 1.0 0; snap: 0.5 0.5 0.5"
+		      ></a-mixin>
+		      <img id="groundTexture2" src="assets/bg.jpg">
+      		  <img id="skyTexture2" src="assets/bluesky.jpg">
+	  
+		      <a-mixin id="disco"
+		         geometry="primitive: cylinder; radius: 1.0 ; height: 0.001"
+		         material="shader: standard"
+		         random-color
+		         snap="offset: 0 1.0 0; snap: 0.5 0.5 0.5"
+		      ></a-mixin>
+			  <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+		      <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg">
+		      <a-mixin id="voxel"
+		         geometry="primitive: box; height: 1.0 width: 1.0; depth: 1.0"
+		         material="shader: standard"
+		         random-color
+		         snap="offset: 0.5 0.5 0.5; snap: 0.5 0.5 0.5"
+		      ></a-mixin>
+			  <a-mixin id="bbpp"
+		         geometry="primitive: box; height: 1.50 width: 1.50; depth: 0.0010"
+		         material="shader: standard"
+		         random-color
+		         snap="offset: 0 0.5 0; snap: 0.25 0.25 0.25"
+		      ></a-mixin>
+		    </a-assets>
+			
+			<a-plane id="ground" src="#groundTexture" static-body position="0 0 -4" rotation="-90 0 0" width="100" height="100"></a-plane>
+			<a-background id="sky2" src="#skyTexture2" ></a-background>
+		   <!-- <a-sky id="sky2" src="#skyTexture2" theta-length="90" radius="50"></a-sky>
+		
+		    <!-- Hands. -->
+		    <!-- If detected, will use built-in controller model (e.g. Oculus Touch or Vive) -->
+		    <a-entity id="lefthand" auto-detect-controllers="hand:left" controller-cursor intersection-spawn="event: click; mixin: constraint":></a-entity>
+		    <a-entity id="righthand" auto-detect-controllers="hand:right"></a-entity>
+					
+           
+            <!--Build three obstacles as static bodies so we can stand on them-->
+            <a-box dynamic-body position="-2 3.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+            <a-cylinder dynamic-body position="2 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+            
+			<!-- <a-entity velocity="-1 0 0"></a-entity>  -->
+			
+            <!--Build one dynamic body - a soccer ball we can play with-->
+            <a-sphere id="theball" dynamic-body position="4 3.25 -5" radius="2" color="tomato" mass="1"></a-sphere>
+            <!-- sprung boxes-->
+			<a-box id="anchor" position="0 2 -3" dynamic-body color="green"></a-box>
+			<a-box position="0 1 -3"
+					color="blue"
+			       dynamic-body
+			       spring="target: #anchor;
+			               damping: 0.25;
+			               stiffness: 25;"></a-box>
+			
+            <!--Make a player/camera entity, and give it the attributes we need it to have in order control camera with mouse, movement with WASD, and jump with spacebar--
+            <a-entity class="player" id="player"
+                camera
+                jump-ability
+                universal-controls
+                kinematic-body
+                position="1 4 2">
+      			<a-cursor intersection-spawn="event: click; mixin: disco"></a-cursor>
+            </a-entity>-->
+			<a-entity camera
+				gamepad-controls
+                universal-controls
+                touch-controls
+                position="0 15 15">
+      			<a-cursor intersection-spawn="event: click; mixin: voxel"></a-cursor>
+            </a-entity>
+        </a-scene>
+    </body>
+    <script type="text/javascript" src="script.js"></script>
+</html>
+
+<!--
+<script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+<script src="https://unpkg.com/aframe-teleport-controls@0.2.x/dist/aframe-teleport-controls.min.js"></script>
+<script src="https://unpkg.com/aframe-controller-cursor-component@0.2.x/dist/aframe-controller-cursor-component.min.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/random-color.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/snap.js"></script>
+<script src="https://rawgit.com/ngokevin/kframe/csstricks/scenes/aincraft/components/intersection-spawn.js"></script>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+      <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg">
+      <a-mixin id="voxel"
+         geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
+         material="shader: standard"
+         random-color
+         snap="offset: 0.25 0.25 0.25; snap: 0.5 0.5 0.5"
+      ></a-mixin>
+    </a-assets>
+
+    <a-cylinder id="ground" src="#groundTexture" radius="30" height="0.1"></a-cylinder>
+
+    <a-sky id="background" src="#skyTexture" theta-length="90" radius="30"></a-sky>
+
+    <!-- Hands. --
+    <a-entity id="teleHand" hand-controls="left" teleport-controls="type: parabolic; collisionEntities: [mixin='voxel'], #ground"></a-entity>
+    <a-entity id="blockHand" hand-controls="right" controller-cursor intersection-spawn="event: click; mixin: voxel"></a-entity>
+
+    <!-- Camera. --
+    <a-camera>
+      <a-cursor intersection-spawn="event: click; mixin: voxel"></a-cursor>
+    </a-camera>
+  </a-scene>
+</body>
+
+ <script src="https://rawgit.com/chenzlabs/auto-detect-controllers/master/dist/aframe-auto-detect-controllers-component.min.js"></script> 
+
+ 
+    <!-- If detected, will use built-in controller model (e.g. Oculus Touch or Vive) 
+    <a-entity id="lefthand" auto-detect-controllers="hand:left"></a-entity>
+    <a-entity id="righthand" auto-detect-controllers="hand:right"></a-entity>
+	
+	<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script> 
+  <script src="https://unpkg.com/aframe-toggle-controls-component/dist/aframe-toggle-controls-component.min.js"></script> 
+</head>
+ 
+<body>
+  <a-scene toggle-controls="onEvents: toggleOn: offEvents: toggleOff;">
+  </a-scene>
+</body>
